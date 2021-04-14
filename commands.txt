@@ -1,0 +1,40 @@
+python manage.py shell
+from news.models import *
+
+
+
+
+
+Вывести username и рейтинг лучшего пользователя:
+usernames_list = Author.objects.all().order_by('-user_rating').filter().values('user_id')
+username_query = User.objects.filter(id = usernames_list[0]['user_id']).values('username')
+user_name_query[0]['username'], usernames_list[0]['user_rating']
+
+
+
+
+Вывести дату добавления, username автора, рейтинг, заголовок и превью лучшей статьи, 
+основываясь на лайках/дислайках к этой статье.
+post_list = Post.objects.all().order_by('-post_rating').filter().values()
+author_user_id = Author.objects.filter(id = post_list[0]['author_id']).values('user_id')
+better_post_object = Post.objects.get(id = post_list[0]['id'])
+better_post_user = User.objects.filter(id = author_user_id[0]['user_id']).values('username')
+better_post_date = post_list[0]['post_date']
+better_post_rating = post_list[0]['post_rating']
+better_post_title = post_list[0]['post_title']
+better_post_preview = better_post_objects.preview()
+  
+better_post_list = [better_post_date, better_post_user[0]['username'], better_post_rating, better_post_title, better_post_preview]
+
+for title in better_post_list:
+	print(title)  
+
+
+
+
+
+
+Вывести все комментарии (дата, пользователь, рейтинг, текст) к этой статье.
+better_post_comments = Comments.objects.filter(post_id = better_post_objects).values('comment_datetime', 'user_id', 'comment_rating', 'comment_text')
+for dict in better_post_comments:
+	print(dict['comment_datetime'], User.objects.filter(id = 2).values('username'), dict['comment_rating'], dict['comment_text']) 
