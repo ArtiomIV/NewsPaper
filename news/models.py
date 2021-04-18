@@ -55,6 +55,9 @@ class Post(models.Model):
     def preview(self):
         return self.post_text[:124] + '...'
 
+    def __str__(self):
+        return f'{self.titile_state} : {self.post_title} : {self.post_text} : {self.post_date}'
+
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete = models.CASCADE)
     category = models.ForeignKey(Categories, on_delete = models.CASCADE)
