@@ -31,7 +31,7 @@ News
                     {{ post.post_title|censor }}
                 </td>
                 <td>
-                    {{ post.post_date|date:'d M Y'}}
+                    {{ post.post_date|date:'d M Y H:m'}}
                 </td>
                 <td>
                     {{ post.post_text|truncatewords:20|censor }}
