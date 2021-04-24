@@ -1,0 +1,44 @@
+{% extends 'flatpages/default.html' %} 
+
+{% load custom_filters %}
+
+{% block title %}
+Search
+{%endblock title %}
+
+{% block content %}
+<h1 class="preview_title title">Post serach</h1>
+    <hr>
+    <form class="serach_form form" method="GET">
+        {{ filter.form }}
+        <button class="serach_button button" type="submit">Search</button>
+    </form>
+    <hr>
+    <table class="serach_table table">
+        <tr>
+            <td class='table_column column'>
+                Title
+            </td>
+            <td class='table_column column'>
+                Date
+            </td>
+            <td class='table_column column'>
+                Text
+            </td>
+        </tr>
+    {% for post in filter.qs %}
+        <tr>
+            <td>
+                {{ post.post_title|censor }}
+            </td>
+            <td>
+                {{ post.post_date|date:'d M Y H:m'}}
+            </td>
+            <td>
+                {{ post.post_text|truncatewords:50|censor }}
+            </td>
+        </tr>
+    {% endfor %}    
+    </table>
+
+{% endblock content %}
