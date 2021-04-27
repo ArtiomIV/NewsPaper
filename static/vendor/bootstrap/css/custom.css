@@ -2,7 +2,51 @@
     margin-top: 20px;
 }
 
+.table {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.preview_wrapper {
+    align-items: center;
+    margin: 0 auto;
+}
+
 .column {
     text-transform: uppercase;
     font-weight: bold;
+}
+
+.form {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.form input, select, textarea {
+    max-height: 50px;
+    min-height: 50px;
+    max-width: 150px;
+    margin-right: 10px;
+}
+
+.form textarea {
+	outline: none;
+	resize: none;
+    align-items: center;
+}
+
+.id_post_text {
+    text-align: center;
+}
+
+.button {
+    margin-left: 20px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
 }

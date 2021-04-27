@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.forms import fields
+from django.http import request
 
 class Author(models.Model):
     user_rating = models.FloatField(default = 0.0)
@@ -17,9 +19,10 @@ class Author(models.Model):
         self.user_rating = likes_author_comment_sum + rating_article + rating_comments
         print(self.user_rating)
         self.save()
+    
+    def __str__(self):
+        return self.user.get_username()
 
-
-        
 class Categories(models.Model):
     category = models.CharField(max_length = 255, unique = True)
 
@@ -59,6 +62,9 @@ class Post(models.Model):
         
     def preview(self):
         return self.post_text[:124] + '...'
+
+    def get_absolute_url(self):
+        return f'/posts/{self.id}'
 
     def __str__(self):
         return f'{self.titile_state} : {self.post_title} : {self.post_text} : {self.post_date}'

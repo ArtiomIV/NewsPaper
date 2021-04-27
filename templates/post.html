@@ -11,15 +11,15 @@ Post
 <!-- В контенте на странице мы выводим сам товар, айди которого было передано в адрес -->
 {% block content %}
 {% if post %}
-        <table>
+        <table class="detail_table table">
             <tr>
-                <td>
+                <td class='detail_column column'>
                     Title
                 </td>
-                <td>
+                <td class='detail_column column'>
                     Date
                 </td>
-                <td>
+                <td class='detail_column column'>
                     Text
                 </td>
             </tr>
@@ -35,6 +35,7 @@ Post
                 </td>
             </tr>
         </table>
+        <a href="{% url 'posts_list' %}"><u>Home</u></a>
         
 {% else %}
     <h2>No news</h2>
