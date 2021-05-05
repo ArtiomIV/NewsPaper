@@ -1,0 +1,16 @@
+{% extends 'flatpages/default.html' %} 
+
+{% load custom_filters %}
+
+{% block title %} Password Change {% endblock title %}
+
+{% block content %}
+
+<h3>Password update </h3>
+<form class="user_info form" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="user_info_button button" type="submit">Save</button>
+</form>
+
+{% endblock content%}

@@ -26,7 +26,10 @@ SECRET_KEY = 'django-insecure-m3es^j#70cjif9=du4!*0j#2ti3oo^i@sr*)=wwnvie1uczv_4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
+
+ACCOUNT_FORMS = {'signup': 'news.forms.BasicSignupForm'}
+
 
 
 # Application definition
@@ -45,6 +48,12 @@ INSTALLED_APPS = [
     'django_filters',
     'fpages',
     'news',
+
+    #allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     
 ]
 
@@ -67,13 +76,19 @@ MIDDLEWARE = [
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
+LOGIN_URL = '/accounts/login/'
+
+LOGOUT_REDIRECT_URL = '/posts/'
+
+LOGIN_REDIRECT_URL = '/posts/<int:pk>/'
+
 ROOT_URLCONF = 'NewsPaper.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'APP_DIRS': True,
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates', 'allauth')],
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -84,6 +99,21 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 WSGI_APPLICATION = 'NewsPaper.wsgi.application'
 
