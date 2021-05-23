@@ -187,7 +187,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'artiom199821zxc'
-EMAIL_HOST_PASSWORD = '*******'
+EMAIL_HOST_PASSWORD = '0790656Ae'
 EMAIL_USE_TLS = True
 
 CELERY_BROKER_URL = 'redis://localhost:6379' # указывает на URL брокера сообщений (Redis). По умолчанию он находится на порту 6379.
