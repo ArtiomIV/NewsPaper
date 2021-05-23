@@ -186,9 +186,15 @@ USE_TZ = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'artiom199821'
-EMAIL_HOST_PASSWORD = '*********'
+EMAIL_HOST_USER = 'artiom199821zxc'
+EMAIL_HOST_PASSWORD = '*******'
 EMAIL_USE_TLS = True
+
+CELERY_BROKER_URL = 'redis://localhost:6379' # указывает на URL брокера сообщений (Redis). По умолчанию он находится на порту 6379.
+CELERY_RESULT_BACKEND = 'redis://localhost:6379' # указывает на хранилище результатов выполнения задач.
+CELERY_ACCEPT_CONTENT = ['application/json'] # допустимый формат данных.
+CELERY_TASK_SERIALIZER = 'json' # метод сериализации задач.
+CELERY_RESULT_SERIALIZER = 'json' # метод сериализации результатов.
 
 
 # Static files (CSS, JavaScript, Images)
