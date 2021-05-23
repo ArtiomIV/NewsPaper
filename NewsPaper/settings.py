@@ -26,10 +26,19 @@ SECRET_KEY = 'django-insecure-m3es^j#70cjif9=du4!*0j#2ti3oo^i@sr*)=wwnvie1uczv_4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    '.newspaper.com',
+]
 
 ACCOUNT_FORMS = {'signup': 'news.forms.BasicSignupForm'}
 
+
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda a: "/posts/",
+}
+
+APSCHEDULER_RUN_NOW_TIMEOUT = 25
 
 
 # Application definition
@@ -47,7 +56,8 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'django_filters',
     'fpages',
-    'news',
+    'news.apps.NewsConfig',
+    'django_apscheduler',
 
     #allauth
     'allauth',
@@ -55,6 +65,13 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     
+]
+
+DEFAULT_FROM_EMAIL = 'artiom199821zxc@gmail.com'
+
+
+ADMINS = [
+    ('admin', 'ivan199821zxc@gmail.com'),
 ]
 
 SITE_ID = 2
@@ -74,6 +91,7 @@ MIDDLEWARE = [
 
     # added decoretores
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware'
 ]
 
 LOGIN_URL = '/accounts/login/'
@@ -100,6 +118,10 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "module.context_processors.site",
+)
+
 AUTHENTICATION_BACKENDS = [
 
     # Needed to login by username in Django admin, regardless of `allauth`
@@ -113,7 +135,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 WSGI_APPLICATION = 'NewsPaper.wsgi.application'
 
@@ -160,6 +182,13 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'artiom199821'
+EMAIL_HOST_PASSWORD = '*********'
+EMAIL_USE_TLS = True
 
 
 # Static files (CSS, JavaScript, Images)

@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.forms import fields
-from django.http import request
+from datetime import datetime
+
+from django.db.models.deletion import CASCADE, SET_NULL
+from django.db.models.fields.related import ForeignKey, OneToOneField
 
 class Author(models.Model):
     user_rating = models.FloatField(default = 0.0)
@@ -25,9 +27,14 @@ class Author(models.Model):
 
 class Categories(models.Model):
     category = models.CharField(max_length = 255, unique = True)
+    subscribers = models.ManyToManyField(User)
 
     def __str__(self):
         return self.category
+
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
 
 class Post(models.Model):
     ARTICLE = 'AR'
@@ -66,13 +73,15 @@ class Post(models.Model):
     def get_absolute_url(self):
         return f'/posts/{self.id}'
 
+    def getDateTime(self):
+        return self.post_date
+
     def __str__(self):
         return f'{self.titile_state} : {self.post_title} : {self.post_text} : {self.post_date}'
 
 class PostCategory(models.Model):
-    post = models.ForeignKey(Post, on_delete = models.CASCADE)
     category = models.ForeignKey(Categories, on_delete = models.CASCADE)
-
+    post = models.ForeignKey(Post, on_delete = models.CASCADE)
 
 class Comments(models.Model):
     post = models.ForeignKey(Post, on_delete = models.CASCADE)
@@ -89,3 +98,6 @@ class Comments(models.Model):
     def commentDislike(self):
         self.comment_rating -=1 if self.comment_rating > 0.0 else 0.0
         self.save()
+
+    def __str__(self):
+        return self.comment_text

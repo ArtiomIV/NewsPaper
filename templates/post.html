@@ -41,17 +41,4 @@ Post
     <h2>No news</h2>
 {% endif %}
 
-{% if is_not_author %}
-<hr>
-<button> <a href="{% url 'upgrade' %}"> Become author</a> </button>
-{% endif %}
-
-<hr>
-
-<button> <a href="{% url 'logout' %}"> Logout</a> </button>
-
-<hr>
-
-<button> <a href="{% url 'user_profile' user.id %}"> Edit profile</a> </button>
-
 {% endblock content %}

@@ -3,9 +3,10 @@ from django.contrib.auth.models import Group, User
 from django.forms import ModelForm
 from .models import Post
 from django import forms
+from django.core.mail import send_mail
 
 class PostForm(ModelForm):
-    
+
     class Meta:
         model = Post
         fields = ['titile_state', 'post_title', 'post_text', 'author', 'category']
@@ -50,7 +51,6 @@ class BasicSignupForm(SignupForm):
 
     def save(self, request): #this method only executed if user are respected all points of signup form
         user = super(BasicSignupForm, self).save(request)
-        user.first_name = self.cleaned_data.pop('first_name')
         common_group = Group.objects.get(name = 'common') # we get object of basic group
         common_group.user_set.add(user)
         return user

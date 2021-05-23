@@ -1,9 +1,13 @@
-from django.contrib.auth import login
+from django.db.models.deletion import CASCADE
+from django.http import request
 from django.views.generic import ListView, CreateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.core.mail import EmailMultiAlternatives
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from django.shortcuts import redirect
 from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
@@ -100,3 +104,25 @@ class PasswordUpdateView(UpdateView):
     template_name = 'pwdchage.html'
     queryset = User.objects.all()
     form_class = ChangePasswordForm
+
+class CatigoriesView(ListView):
+    template_name = 'categories.html'
+    context_object_name = 'categories'
+    queryset = Categories.objects.all()
+
+@login_required
+def subscribe(request, **kwargs):
+    pk = kwargs.get('pk')
+    category = Categories.objects.get(id = pk)
+    category_sub = Categories.objects.filter(subscribers = request.user )
+    if not category in category_sub:
+        category.subscribers.add(request.user )
+    return redirect('/posts/categories/')
+
+@login_required
+def unsubscribe(request, **kwargs):
+    pk = kwargs.get('pk')
+    category = Categories.objects.get(pk = pk)
+    category.subscribers.remove(request.user)
+    print('unsubscribe')
+    return redirect('/posts/categories/')

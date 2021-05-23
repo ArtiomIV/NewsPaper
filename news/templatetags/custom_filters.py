@@ -25,3 +25,7 @@ def censor(text):
                 bwords_count += 1
 
     return ' '.join(map(str, text))
+
+@register.filter(name = 'index')
+def index(list, i):
+    return list[i]

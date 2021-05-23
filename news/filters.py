@@ -12,4 +12,8 @@ class PostFilter(FilterSet):
         model = Post
         fields = {
             'author_id__user_id__username' : ['icontains'],
+            'category' : ['exact']
         }
+
+
+# PostCategory.objects.filter(category__subscribers__username = 'artiom').values()  
