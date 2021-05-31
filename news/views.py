@@ -9,8 +9,9 @@ from django.core.mail import EmailMultiAlternatives
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.shortcuts import redirect
-from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group, User
+from django.core.cache import cache
 
 from allauth.account.forms import ChangePasswordForm
 
@@ -57,12 +58,16 @@ class PostSearch(ListView):
 
 class PostDetail(LoginRequiredMixin, DetailView):
     template_name = 'post.html'
-    queryset = Post.objects.all() 
+    queryset = Post.objects.all()
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['is_not_author'] = not self.request.user.groups.filter(name = 'authors').exists()
-        return context
+    def get_object(self):
+        obj = cache.get(f'post-{self.kwargs["pk"]}', None)
+
+        if not obj:
+            obj = super().get_object(queryset = self.queryset)
+            cache.set(f'post-{self.kwargs["pk"]}', obj)
+        print(obj)
+        return obj
 
 @login_required
 def upgradeMe(request):

@@ -16,7 +16,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -28,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    '.newspaper.com',
+    'newspaper',
+    '172.23.197.233',
 ]
 
 ACCOUNT_FORMS = {'signup': 'news.forms.BasicSignupForm'}
@@ -91,7 +91,8 @@ MIDDLEWARE = [
 
     # added decoretores
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-    'django.contrib.sites.middleware.CurrentSiteMiddleware'
+    'django.contrib.sites.middleware.CurrentSiteMiddleware',
+
 ]
 
 LOGIN_URL = '/accounts/login/'
@@ -183,18 +184,32 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Email sending django
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'artiom199821zxc'
-EMAIL_HOST_PASSWORD = '*******'
+EMAIL_HOST_PASSWORD = '0790656Ae'
 EMAIL_USE_TLS = True
 
+# Celery settings
 CELERY_BROKER_URL = 'redis://localhost:6379' # указывает на URL брокера сообщений (Redis). По умолчанию он находится на порту 6379.
 CELERY_RESULT_BACKEND = 'redis://localhost:6379' # указывает на хранилище результатов выполнения задач.
 CELERY_ACCEPT_CONTENT = ['application/json'] # допустимый формат данных.
 CELERY_TASK_SERIALIZER = 'json' # метод сериализации задач.
 CELERY_RESULT_SERIALIZER = 'json' # метод сериализации результатов.
+
+CAHES = {
+    'default':{
+        'TIMEOUT': 60,
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, '/cache_files'), # Указываем, куда будем сохранять кэшируемые файлы! Не забываем создать папку cache_files внутри папки с manage.py!
+    }
+}
+
+
+#time
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
@@ -75,6 +76,11 @@ class Post(models.Model):
 
     def getDateTime(self):
         return self.post_date
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        cache.delete(f'post-{self.pk}')
+
 
     def __str__(self):
         return f'{self.titile_state} : {self.post_title} : {self.post_text} : {self.post_date}'

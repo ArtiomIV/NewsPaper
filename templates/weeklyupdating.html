@@ -11,7 +11,7 @@
     <h3>here is the latest news of this week</h3>
 
     {% for post in posts %}
-        <h3><a href="http://{{ domain }}:8000{% url 'post_detail' post.id %}"> {{post.post_title}}</a> </h3>
+        <h3><a href="http://172.23.197.233:8000{% url 'post_detail' post.id %}"> {{post.post_title}}</a> </h3>
     {% endfor %}  
     
 </body>
