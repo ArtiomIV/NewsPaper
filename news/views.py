@@ -119,7 +119,7 @@ class CatigoriesView(ListView):
 def subscribe(request, **kwargs):
     pk = kwargs.get('pk')
     category = Categories.objects.get(id = pk)
-    category_sub = Categories.objects.filter(subscribers = request.user )
+    category_sub = Categories.objects.filter(subscribers = request.user)
     if not category in category_sub:
         category.subscribers.add(request.user )
     return redirect('/posts/categories/')
